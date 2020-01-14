@@ -18,7 +18,6 @@ function compose(...args){
   return function(param){
     let initVal = param;
     return args.reduce(function (accumulator, currentValue){
-      // console.log(currentValue)
       return results = currentValue(accumulator);
     }, initVal)
   }
