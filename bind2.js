@@ -6,7 +6,7 @@ Function.prototype.bind2 = function (fn, context, ...rest) {
   return function boundFunction(...args) {
     var targetArguments = Array.prototype.slice.call(arguments);
     return boundTargetFunction.apply(
-      context,
+      fn,
       boundArguments.concat(targetArguments)
     );
   };
