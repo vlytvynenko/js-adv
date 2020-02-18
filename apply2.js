@@ -9,6 +9,7 @@ Function.prototype.apply2 = function(newThis, arr) {
     for (let i = 0, len = arr.length; i < len; i++) {
       args.push("arr[" + i + "]");
     }
+    //Change eval.
     result = eval("newThis.fnName(" + args + ")");
   }
 

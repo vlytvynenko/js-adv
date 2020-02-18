@@ -5,7 +5,7 @@ Function.prototype.call2 = function(newThis) {
   for (var i = 1, len = arguments.length; i < len; i++) {
     args.push("arguments[" + i + "]");
   }
-
+//Change eval.
   return eval("newThis.fnName(" + args + ")");
 }
 
