@@ -1,12 +1,12 @@
 //Create bind2 function compose.bind2(function or context)
 
-Function.prototype.bind2 = function (fn, context, ...rest) {
+Function.prototype.bind2 = function (context, ...rest) {
   var boundTargetFunction = this;
   var boundArguments = Array.prototype.slice.call(arguments, 1);
   return function boundFunction(...args) {
     var targetArguments = Array.prototype.slice.call(arguments);
     return boundTargetFunction.apply(
-      fn,
+      context,
       boundArguments.concat(targetArguments)
     );
   };

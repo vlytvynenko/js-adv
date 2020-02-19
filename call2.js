@@ -1,18 +1,17 @@
-Function.prototype.call2 = function(newThis) {
-  newThis.fnName = this;
-  var args = [];
+Function.prototype.call2 = function(fn, context, ...args) {
+  const uniqId = Date.now().toString()
+  context[uniqId] = fn
 
-  for (var i = 1, len = arguments.length; i < len; i++) {
-    args.push("arguments[" + i + "]");
-  }
-//Change eval.
-  return eval("newThis.fnName(" + args + ")");
+  const result = context[uniqId](...args)
+  delete context[uniqId]
+
+  return result
 }
 
 var user = { firstName: "Name", surName: "Surname", patronym: "Patronym"};
 
-function showFullName(firstPart, lastPart) {
-  console.log( this[firstPart] + " " + this[lastPart] );
+function showFullName(arg1, arg2) {
+  console.log( `From object: ${this.firstName}, from args: ${arg1} AND ${arg2}` );
 }
 
-showFullName.call2(user, 'firstName', 'surName')
+Function.prototype.call2(showFullName, user, 'arg1', 'arg2')

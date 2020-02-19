@@ -1,25 +1,18 @@
-Function.prototype.apply2 = function(newThis, arr) {
-  newThis.fnName = this;
+Function.prototype.apply2 = function(fn, context, arr) {
+  const uniqId = Date.now().toString()
 
-  var args = [];
-  var results = null;
-  if(!arr) {
-    result = newThis.fnName;
-  } else {
-    for (let i = 0, len = arr.length; i < len; i++) {
-      args.push("arr[" + i + "]");
-    }
-    //Change eval.
-    result = eval("newThis.fnName(" + args + ")");
-  }
+  context[uniqId] = fn
 
-  return result;
+  const result = context[uniqId](...arr)
+  delete context[uniqId]
+
+  return result
 }
 
 var user = { firstName: "Name", surName: "Surname", patronym: "Patronym"};
 
-function showFullName(firstPart, lastPart) {
-  console.log( this[firstPart] + " " + this[lastPart] );
+function showFullName(arg1, arg2) {
+  console.log(` This is context - ${this.surName} and this is arguments - ${arg1}, ${arg2} `);
 }
 
-showFullName.apply2(user, ['firstName', 'surName'])
+Function.prototype.apply2(showFullName, user, ['argument 1', 'argument 2'])
