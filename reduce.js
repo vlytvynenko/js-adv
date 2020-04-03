@@ -1,7 +1,7 @@
 //Create 2 functions to replace methods Reduce right and reduce.
 
 Array.prototype.reduce2 = function(fn, acc){
-  var result = acc !== undefined ? acc : this[0];
+  var result = acc !== undefined ? acc : acc = 0;
   for (var i = 0; i < this.length; i++) {
     result = fn(result, this[i]);
   }
