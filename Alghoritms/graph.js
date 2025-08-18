@@ -23,10 +23,9 @@ function personIsSeller(person) {
     return person.includes("m")
 }
 
-//example of function to search
+//example of function to search first, not optimized O(n) for some cases
 function search(name) {
     let searchArr = [];
-    //searchArr.push(graph[name]);
     graph[name].forEach((el) => searchArr.push(el))
     let searchedArr = [];
     while (searchArr.length > 0) {
@@ -36,7 +35,6 @@ function search(name) {
                 console.log(`${person} is mango seller!`);
                 return true;
             } else {
-                //searchArr.push(graph[person]);
                 if (graph[person] !== undefined) {
                     graph[person].forEach((el) => searchArr.push(el))
                 }
@@ -48,3 +46,31 @@ function search(name) {
 }
 
 search("me");
+
+//Optimizedversion
+//1. Use a proper queue instead of shift()
+//2. Use a Set instead of searchedArr
+
+function searchOpt (name) {
+    let queue = [...graph[name]];
+    let head = 0;
+    let searched = new Set();
+
+    while (head < queue.length) {
+        let person = queue[head++]
+        if (!searched.has(person)) {
+            if (personIsSeller(person)) {
+                console.log(`${person} is mango seller! Optimized algorithm`)
+                return true
+            } else {
+                if (graph[person] !== undefined) {
+                    queue.push(...graph[person]);
+                }
+                searched.add(person)
+            }
+        }
+    }
+    return false;
+}
+
+searchOpt("me");
